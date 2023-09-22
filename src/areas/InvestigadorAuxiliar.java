@@ -4,12 +4,19 @@
  */
 package areas;
 
+import biblioteca.UtilsES;
 
 /**
  *
  * @author itca
  */
 public class InvestigadorAuxiliar {
+    
+    static final String MISSATGE_ERROR_DADES = "La selecció no és valida. Torneu-ho a intentar";
+    static final String MISSATGE_DEMANAR_CODI = "Introdueix el codi del nou investigador principal";
+    static final String MISSATGE_DEMANAR_NOM = "Introdueix el nom del nou investigador principal";
+    static final String MISSATGE_DEMANAR_EXPERIENCIA = "Introdueix el nombre d'anys d'experiència del nou investigador  principal";
+    static final String MISSATGE_DEMANAR_SOU = "Introdueix el salari del nou investigador principal";
 
     private String codi;
     private String nom;
@@ -19,35 +26,80 @@ public class InvestigadorAuxiliar {
     /*
      TODO CONSTRUCTOR
     
-     Paràmetres: valors per tots els atributs de la classe.
+     Paràmetres: valors per tots els atributs de la classe.   
     
      Accions:
      - Assignar als atributs corresponents els valors passats com a paràmetres.
      */
-
+    public InvestigadorAuxiliar(String codi, String nom, int experiencia, double sou) {
+        this.codi = codi;
+        this.nom = nom;
+        this.experiencia = experiencia;
+        this.sou = sou;
+    }
 
     /*
-     TODO Heu d'implementar tots els mètodes accessors possibles.  
+    TODO Heu d'implementar tots els mètodes accessors possibles.
      */
-   
+    public String getCodi() {
+        return codi;
+    }
+
+    public void setCodi(String codi) {
+        this.codi = codi;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public double getSou() {
+        return sou;
+    }
+
+    public void setSou(double sou) {
+        this.sou = sou;
+    }
 
     /*
     TODO
-    
-     Paràmetres: cap
-    
-     Accions:
-     - Demanar a l'usuari les dades per consola per crear un nou 
-       Investigador/a Auxiliar. Les dades a demanar són les que necessita 
-       el constructor.
-     - Heu de tenir en compte que el sou anual ha de ser un num positiu superior a
-       12000 euros però igual o inferior a 20000
-     - Si tingués un sou diferent no seria Investigador Auxiliar
-     
-     Retorn: Objecte Investigador/a Auxiliar creat.
+    Paràmetres: cap
+    Accions:
+    - Demanar a l'usuari les dades per consola per crear un nou
+    Investigador/a Auxiliar. Les dades a demanar són les que necessita
+    el constructor.
+    - Heu de tenir en compte que el sou anual ha de ser un num positiu superior a
+    12000 euros però igual o inferior a 20000
+    - Si tingués un sou diferent no seria Investigador Auxiliar
+    Retorn: Objecte Investigador/a Auxiliar creat.
      */
     public static InvestigadorAuxiliar addInvestigadorAuxiliar() {
-        
+        //Solicitamos los datos
+        String _codi = UtilsES.demanarString(MISSATGE_DEMANAR_CODI, MISSATGE_ERROR_DADES);
+        String _nom = UtilsES.demanarString(MISSATGE_DEMANAR_NOM, MISSATGE_ERROR_DADES);
+        int _experiencia = UtilsES.demanarEnter(MISSATGE_DEMANAR_EXPERIENCIA, MISSATGE_ERROR_DADES);
+        double _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);
+
+        if ((_sou <= 12000) || (_sou >= 20000)) {
+            System.out.println("\nAmb aquest salari no pot ser Investigador Auxiliar. Operació cancel·lada!");
+            //devolvemos un null??
+            return null;
+        } else {
+            //Creamos un objeto de la clase y pasamos parametros al constructor
+            return new InvestigadorAuxiliar(_codi, _nom, _experiencia, _sou);
+        }
     }
 
     /*
@@ -65,9 +117,22 @@ public class InvestigadorAuxiliar {
      Retorn: cap
      */
     public void updateInvestigadorAuxiliar() {
-   
+        //Solicitamos los datos
+        String _codi = UtilsES.demanarString(MISSATGE_DEMANAR_CODI, MISSATGE_ERROR_DADES);
+        String _nom = UtilsES.demanarString(MISSATGE_DEMANAR_NOM, MISSATGE_ERROR_DADES);
+        int _experiencia = UtilsES.demanarEnter(MISSATGE_DEMANAR_EXPERIENCIA, MISSATGE_ERROR_DADES);
+        double _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);
+
+        if ((_sou <= 12000) || (_sou >= 20000)) {
+            System.out.println("\nAmb aquest salari no pot ser Investigador Auxiliar. Operació cancel·lada!");           
+        } else {
+            //Actualizamos el objeto de la clase 
+            this.setCodi(_codi);
+            this.setNom(_nom);
+            this.setExperiencia(_experiencia);
+            this.setSou(_sou);
+        }
     }
-    
 
     public void showInvestigadorAuxiliar() {
         System.out.println("\nLes dades de l'Investigador/a Auxiliar amb codi " + codi + " són:");

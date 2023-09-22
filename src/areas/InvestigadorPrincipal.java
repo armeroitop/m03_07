@@ -4,6 +4,8 @@
  */
 package areas;
 
+import java.util.Scanner;
+import biblioteca.UtilsES;
 
 /**
  *
@@ -11,11 +13,19 @@ package areas;
  */
 public class InvestigadorPrincipal {
 
+    static final String MISSATGE_ERROR_DADES = "La selecció no és valida. Torneu-ho a intentar";
+    static final String MISSATGE_DEMANAR_CODI = "Introdueix el codi del nou investigador principal";
+    static final String MISSATGE_DEMANAR_NOM = "Introdueix el nom del nou investigador principal";
+    static final String MISSATGE_DEMANAR_EXPERIENCIA = "Introdueix el nombre d'anys d'experiència del nou investigador  principal";
+    static final String MISSATGE_DEMANAR_SOU = "Introdueix el salari del nou investigador principal";
+    
     private String codi;
     private String nom;
     private int experiencia;
     private double sou;
 
+
+    private static Scanner DADES = new Scanner(System.in);
     /*
      TODO CONSTRUCTOR
     
@@ -24,12 +34,48 @@ public class InvestigadorPrincipal {
      Accions:
      - Assignar als atributs corresponents els valors passats com a paràmetres.
      */
+    public InvestigadorPrincipal(String _codi, String _nom, int _experiencia, double _sou) {
+        this.codi = _codi;
+        this.nom = _nom;
+        this.experiencia = _experiencia;
+        this.sou = _sou;
+    }
 
 
     /*
      TODO Heu d'implementar tots els mètodes accessors possibles.  
      */
-   
+    public String getCodi() {
+        return codi;
+    }
+
+    public void setCodi(String codi) {
+        this.codi = codi;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public double getSou() {
+        return sou;
+    }
+
+    public void setSou(double sou) {
+        this.sou = sou;
+    }
 
     /*
     TODO
@@ -46,9 +92,22 @@ public class InvestigadorPrincipal {
      
      Retorn: Objecte Investigador/a Principal creat.
      */
-    public static InvestigadorPrincipal addInvestigadorPrincipal() {
+    public  static InvestigadorPrincipal addInvestigadorPrincipal() { 
+        //Solicitamos los datos
+        String _codi = UtilsES.demanarString(MISSATGE_DEMANAR_CODI, MISSATGE_ERROR_DADES);
+        String _nom = UtilsES.demanarString(MISSATGE_DEMANAR_NOM, MISSATGE_ERROR_DADES);
+        int _experiencia = UtilsES.demanarEnter(MISSATGE_DEMANAR_EXPERIENCIA, MISSATGE_ERROR_DADES);
+        double _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);        
         
-    }
+        if (_sou < 30000) {
+            System.out.println("\nAmb aquest salari no pot ser Investigador Principal. Operació cancel·lada!");
+            //devolvemos el salario minimo, null, exception??
+            return null;
+        } else {
+            //Creamos un objeto de la clase y pasamos parametros al constructor
+            return new InvestigadorPrincipal(_codi, _nom, _experiencia, _sou);
+        } 
+    } 
 
     /*
      TODO
@@ -65,9 +124,23 @@ public class InvestigadorPrincipal {
      Retorn: cap
      */
     public void updateInvestigadorPrincipal() {
-   
+        //Solicitamos los datos
+        String _codi = UtilsES.demanarString(MISSATGE_DEMANAR_CODI, MISSATGE_ERROR_DADES);
+        String _nom = UtilsES.demanarString(MISSATGE_DEMANAR_NOM, MISSATGE_ERROR_DADES);
+        int _experiencia = UtilsES.demanarEnter(MISSATGE_DEMANAR_EXPERIENCIA, MISSATGE_ERROR_DADES);
+        double _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);
+        
+        
+        if (_sou < 30000) {
+            System.out.println("\nAmb aquest salari no pot ser Investigador Principal. Operació cancel·lada!");            
+        } else {
+             //Actualizamos el objeto de la clase 
+            this.setCodi(_codi);
+            this.setNom(_nom);
+            this.setExperiencia(_experiencia);
+            this.setSou(_sou);
+        }
     }
-    
 
     public void showInvestigadorPrincipal() {
         System.out.println("\nLes dades de l'Investigador/a Principal amb codi " + codi + " són:");

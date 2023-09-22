@@ -5,12 +5,19 @@
  */
 package areas;
 
+import biblioteca.UtilsES;
+import java.util.Scanner;
+import org.jcp.xml.dsig.internal.dom.Utils;
 
 /**
  *
  * @author itcq
  */
 public class Departament {
+    
+    static final String MISSATGE_ERROR_DADES = "La selecció no és valida. Torneu-ho a intentar";
+    static final String MISSATGE_DEMANAR_NOM = "Introdueix el nom del nou departament";
+    static final String MISSATGE_DEMANAR_AREA = "Introdueix el area del nou departament";
 
     private String nom;
     private String area;
@@ -21,6 +28,8 @@ public class Departament {
     private InvestigadorAuxiliar[] investigadorsAuxiliars = new InvestigadorAuxiliar[100];
     private int pInvestigadorsAuxiliars = 0; //Primera posició buida de l'array d'investigadors auxiliars
 
+    private static Scanner DADES = new Scanner(System.in);
+
     /*
      TODO CONSTRUCTOR
     
@@ -29,16 +38,82 @@ public class Departament {
      Accions:
      - Assignar als atributs els valors passats com a paràmetres.    
      */
-
+    public Departament(String nom, String area) {
+        this.nom = nom;
+        this.area = area;
+    }
 
     /*
      TODO Heu d'implementar tots els mètodes accessors possibles.  
      */
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public InvestigadorAssociat[] getInvestigadorsAssociats() {
+        return investigadorsAssociats;
+    }
+
+    public void setInvestigadorsAssociats(InvestigadorAssociat[] investigadorsAssociats) {
+        this.investigadorsAssociats = investigadorsAssociats;
+    }
+
+    public int getpInvestigadorsAssociats() {
+        return pInvestigadorsAssociats;
+    }
+
+    public void setpInvestigadorsAssociats(int pInvestigadorsAssociats) {
+        this.pInvestigadorsAssociats = pInvestigadorsAssociats;
+    }
+
+    public InvestigadorPrincipal[] getInvestigadorsPrincipals() {
+        return investigadorsPrincipals;
+    }
+
+    public void setInvestigadorsPrincipals(InvestigadorPrincipal[] investigadorsPrincipals) {
+        this.investigadorsPrincipals = investigadorsPrincipals;
+    }
+
+    public int getpInvestigadorsPrincipals() {
+        return pInvestigadorsPrincipals;
+    }
+
+    public void setpInvestigadorsPrincipals(int pInvestigadorsPrincipals) {
+        this.pInvestigadorsPrincipals = pInvestigadorsPrincipals;
+    }
+
+    public InvestigadorAuxiliar[] getInvestigadorsAuxiliars() {
+        return investigadorsAuxiliars;
+    }
+
+    public void setInvestigadorsAuxiliars(InvestigadorAuxiliar[] investigadorsAuxiliars) {
+        this.investigadorsAuxiliars = investigadorsAuxiliars;
+    }
+
+    public int getpInvestigadorsAuxiliars() {
+        return pInvestigadorsAuxiliars;
+    }
+
+    public void setpInvestigadorsAuxiliars(int pInvestigadorsAuxiliars) {
+        this.pInvestigadorsAuxiliars = pInvestigadorsAuxiliars;
+    }
 
 
     /*
     TODO
-    
+        
      Paràmetres: cap
     
      Accions:
@@ -48,7 +123,14 @@ public class Departament {
      Retorn: El nou Departament creat.
      */
     public static Departament addDepartament() {
+        //Solicitamos los datos
+        String _nom = UtilsES.demanarString(MISSATGE_DEMANAR_NOM, MISSATGE_ERROR_DADES);
+        String _area = UtilsES.demanarString(MISSATGE_DEMANAR_AREA, MISSATGE_ERROR_DADES);
 
+        //Creamos un objeto de la clase y pasamos parametros al constructor
+        Departament departament = new Departament(_nom, _area);
+
+        return departament;
     }
 
     /*
@@ -66,7 +148,14 @@ public class Departament {
     Retorn: cap
      */
     public void updateDepartament() {
+        //Solicitamos los datos
+        String _nom = UtilsES.demanarString(MISSATGE_DEMANAR_NOM, MISSATGE_ERROR_DADES);
+        String _area = UtilsES.demanarString(MISSATGE_DEMANAR_AREA, MISSATGE_ERROR_DADES);
 
+        System.out.println("Els nous dades per actualizar el departament son: Nom: " + _nom + " i Ubicació: " + _area);
+
+        setNom(_nom);
+        setArea(_area);
     }
 
     /*
@@ -81,21 +170,41 @@ public class Departament {
      Retorn: despesa total
      */
     public int calcularTotalDespesa() {
+        double despesaInvesAssociats = 0;
+        for (InvestigadorAssociat investigadorsAssociat : investigadorsAssociats) {
+            if (investigadorsAssociat != null) {
+                despesaInvesAssociats += investigadorsAssociat.getSou();
+            }
+        }
 
+        double despesaInvesAuxiliars = 0;
+        for (InvestigadorAuxiliar investigadorsAuxiliar : investigadorsAuxiliars) {
+            if (investigadorsAuxiliar != null) {
+                despesaInvesAuxiliars += investigadorsAuxiliar.getSou();
+            }
+        }
+
+        double despesaInvesPrincipal = 0;
+        for (InvestigadorPrincipal investigadorsPrincipal : investigadorsPrincipals) {
+            if (investigadorsPrincipal != null) {
+                despesaInvesPrincipal += investigadorsPrincipal.getSou();
+            }
+
+        }
+
+        return (int) (despesaInvesAssociats + despesaInvesAuxiliars + despesaInvesPrincipal);
     }
-    
-    
+
     public void showDepartament() {
         System.out.println("\nLes dades del Departament " + nom + " són:");
         System.out.println("\nArea: " + area);
         System.out.println("\nDespesa Total: " + calcularTotalDespesa());
     }
-    
-    
+
     /*
      InvestigadorPrincipal
      */
-    /*
+ /*
      TODO
     
      Paràmetres: cap
@@ -113,6 +222,14 @@ public class Departament {
      Retorn: cap
      */
     public void addInvestigadorPrincipal() {
+        InvestigadorPrincipal nouInvestigadorPrincipal = InvestigadorPrincipal.addInvestigadorPrincipal();
+
+        if (selectInvestigadorPrincipal(nouInvestigadorPrincipal.getCodi()) == -1) {
+            investigadorsPrincipals[pInvestigadorsPrincipals] = nouInvestigadorPrincipal;
+            pInvestigadorsPrincipals++;
+        } else {
+            System.out.println("\nL'Investigador/a Principal ja existeix");
+        }
 
     }
 
@@ -131,12 +248,12 @@ public class Departament {
 
         return -1;
     }
-    
 
-   /*
+
+    /*
      InvestigadorAssociat
      */
-    /*
+ /*
      TODO
     
      Paràmetres: cap
@@ -154,7 +271,14 @@ public class Departament {
      Retorn: cap
      */
     public void addInvestigadorAssociat() {
+        InvestigadorAssociat nouInvestigadorAssociat = InvestigadorAssociat.addInvestigadorAssociat();
 
+        if (selectInvestigadorAssociat(nouInvestigadorAssociat.getCodi()) == -1) {
+            investigadorsAssociats[pInvestigadorsAssociats] = nouInvestigadorAssociat;
+            pInvestigadorsAssociats++;
+        } else {
+            System.out.println("\nL'Investigador/a Associat ja existeix");
+        }
     }
 
     public int selectInvestigadorAssociat(String codi) {
@@ -172,12 +296,11 @@ public class Departament {
 
         return -1;
     }
-    
-    
+
     /*
      InvestigadorAuxiliar
      */
-    /*
+ /*
      TODO
     
      Paràmetres: cap
@@ -195,7 +318,14 @@ public class Departament {
      Retorn: cap
      */
     public void addInvestigadorAuxiliar() {
+        InvestigadorAuxiliar nouInvestigadorAuxiliar = InvestigadorAuxiliar.addInvestigadorAuxiliar();
 
+        if (selectInvestigadorAuxiliar(nouInvestigadorAuxiliar.getCodi()) == -1) {
+            investigadorsAuxiliars[pInvestigadorsAuxiliars] = nouInvestigadorAuxiliar;
+            pInvestigadorsAuxiliars++;
+        } else {
+            System.out.println("\nL'Investigador/a Auxiliar ja existeix");
+        }
     }
 
     public int selectInvestigadorAuxiliar(String codi) {
