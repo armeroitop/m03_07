@@ -160,17 +160,16 @@ public class Application {
             System.out.println("\n3. Llista Departaments");
             opcio = UtilsES.demanarEnter("", MISSATGE_ERROR_DADES);
             switch (opcio) {
-                case 0:
+                case 0: // SORTIR
                     break;
-                case 1:
+                case 1: // ALTA
                     if (centreRecercaActual != null) {
                         centreRecercaActual.addDepartament();
                     } else {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
                     break;
-                case 2:
-                    System.out.println("\nImplementa el MODIFICAR.");
+                case 2: // MODIFICAR                    
                     if (centreRecercaActual != null) {
                         indexSel = centreRecercaActual.selectDepartament(null);
                         if (indexSel >= 0) {
@@ -183,8 +182,7 @@ public class Application {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
                     break;
-                case 3:
-                    System.out.println("\nImplementa el LLISTAR.");
+                case 3: // LLISTAR                   
                     if (centreRecercaActual != null) {
                         Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
                         for (Departament tmpDepartament : tmpDepartaments) {
@@ -226,7 +224,6 @@ public class Application {
     public static void menuInvestigadorsPrincipals() {
         int opcio;
         do {
-            int indexSel;
             System.out.println("\nSelecciona una opció");
             System.out.println("\n0. Sortir");
             System.out.println("\n1. Alta");
@@ -234,9 +231,9 @@ public class Application {
             System.out.println("\n3. Llista Investigadors Principals");
             opcio = UtilsES.demanarEnter("", MISSATGE_ERROR_DADES);
             switch (opcio) {
-                case 0:
+                case 0: // SORTIR
                     break;
-                case 1:
+                case 1: // ALTA
                     if (centreRecercaActual != null) {
                         try {
                             centreRecercaActual.addInvestigadorPrincipalDepartament();
@@ -247,32 +244,40 @@ public class Application {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
                     break;
-                case 2:
+                case 2: // MODIFICAR
                     if (centreRecercaActual != null) {
                         //Solicitamos departamento
                         int tmpIndexDepartament = centreRecercaActual.selectDepartament(null);
-                        //Del departamento solicitado nos traemos al array de investigadores principales y solicitamos al usuario el codigo del que quiere actualizar
-                        Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
-                        InvestigadorPrincipal[] tmpInvestigadorsPrincipals = tmpDepartaments[tmpIndexDepartament].getInvestigadorsPrincipals();
-                        int tmpIndexInvestigadorPrincipal = tmpDepartaments[tmpIndexDepartament].selectInvestigadorPrincipal(null);
-                        //Actualizamos al seleccionado
-                        tmpInvestigadorsPrincipals[tmpIndexInvestigadorPrincipal].updateInvestigadorPrincipal();
+                        if (tmpIndexDepartament >= 0) {
+                            //Del departamento solicitado nos traemos al array de investigadores principales y solicitamos al usuario el codigo del que quiere actualizar
+                            Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
+                            InvestigadorPrincipal[] tmpInvestigadorsPrincipals = tmpDepartaments[tmpIndexDepartament].getInvestigadorsPrincipals();
+                            int tmpIndexInvestigadorPrincipal = tmpDepartaments[tmpIndexDepartament].selectInvestigadorPrincipal(null);
+                            //Actualizamos al seleccionado
+                            tmpInvestigadorsPrincipals[tmpIndexInvestigadorPrincipal].updateInvestigadorPrincipal();
+                        } else {
+                            System.out.println("\nEl departament seleccionat no eixisteix");
+                        }
                     } else {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
                     break;
-                case 3:
+                case 3: // LLISTAR
                     if (centreRecercaActual != null) {
                         //Solicitamos departamento
                         int tmpIndexDepartament = centreRecercaActual.selectDepartament(null);
-                        //Del departamento solicitado nos traemos al array de investigadores principales
-                        Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
-                        InvestigadorPrincipal[] tmpInvestigadorsPrincipals = tmpDepartaments[tmpIndexDepartament].getInvestigadorsPrincipals();
-                        //Recorremos el array/tabla mostrando los datos de cada uno
-                        for (InvestigadorPrincipal investigadorsPrincipal : tmpInvestigadorsPrincipals) {
-                            if (investigadorsPrincipal != null) {
-                                investigadorsPrincipal.showInvestigadorPrincipal();
+                        if (tmpIndexDepartament >= 0) {
+                            //Del departamento solicitado nos traemos al array de investigadores principales
+                            Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
+                            InvestigadorPrincipal[] tmpInvestigadorsPrincipals = tmpDepartaments[tmpIndexDepartament].getInvestigadorsPrincipals();
+                            //Recorremos el array/tabla mostrando los datos de cada uno
+                            for (InvestigadorPrincipal investigadorsPrincipal : tmpInvestigadorsPrincipals) {
+                                if (investigadorsPrincipal != null) {
+                                    investigadorsPrincipal.showInvestigadorPrincipal();
+                                }
                             }
+                        } else {
+                            System.out.println("\nEl departament seleccionat no eixisteix");
                         }
                     } else {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
@@ -307,12 +312,11 @@ public class Application {
     public static void menuInvestigadorsAssociats() {
         int opcio;
         do {
-            int indexSel;
             System.out.println("\nSelecciona una opció");
             System.out.println("\n0. Sortir");
             System.out.println("\n1. Alta");
             System.out.println("\n2. Modificar");
-            System.out.println("\n3. Llista Investigadors Principals");
+            System.out.println("\n3. Llista Investigadors Associats");
             opcio = UtilsES.demanarEnter("", MISSATGE_ERROR_DADES);
             switch (opcio) {
                 case 0:
@@ -328,16 +332,20 @@ public class Application {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
                     break;
-                case 2:                    
+                case 2:
                     if (centreRecercaActual != null) {
                         //Solicitamos departamento
                         int tmpIndexDepartament = centreRecercaActual.selectDepartament(null);
-                        //Del departamento solicitado nos traemos al array de investigadores Associat y solicitamos al usuario el codigo del que quiere actualizar
-                        Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
-                        InvestigadorAssociat[] tmpInvestigadorsAssociats = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAssociats();
-                        int tmpIndexInvestigadorAssociat = tmpDepartaments[tmpIndexDepartament].selectInvestigadorAssociat(null);
-                        //Actualizamos al seleccionado
-                        tmpInvestigadorsAssociats[tmpIndexInvestigadorAssociat].updateInvestigadorAssociat();
+                        if (tmpIndexDepartament >= 0) {
+                            //Del departamento solicitado nos traemos al array de investigadores Associat y solicitamos al usuario el codigo del que quiere actualizar
+                            Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
+                            InvestigadorAssociat[] tmpInvestigadorsAssociats = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAssociats();
+                            int tmpIndexInvestigadorAssociat = tmpDepartaments[tmpIndexDepartament].selectInvestigadorAssociat(null);
+                            //Actualizamos al seleccionado
+                            tmpInvestigadorsAssociats[tmpIndexInvestigadorAssociat].updateInvestigadorAssociat();
+                        } else {
+                            System.out.println("\nEl departament seleccionat no eixisteix");
+                        }
                     } else {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
@@ -346,14 +354,18 @@ public class Application {
                     if (centreRecercaActual != null) {
                         //Solicitamos departamento
                         int tmpIndexDepartament = centreRecercaActual.selectDepartament(null);
-                        //Del departamento solicitado nos traemos al array de investigadores principales
-                        Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
-                        InvestigadorAssociat[] tmpInvestigadorsAssociats = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAssociats();
-                        //Recorremos el array/tabla mostrando los datos de cada uno
-                        for (InvestigadorAssociat investigadorsAssociat : tmpInvestigadorsAssociats) {
-                            if (investigadorsAssociat != null) {
-                                investigadorsAssociat.showInvestigadorAssociat();
+                        if (tmpIndexDepartament >= 0) {
+                            //Del departamento solicitado nos traemos al array de investigadores principales
+                            Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
+                            InvestigadorAssociat[] tmpInvestigadorsAssociats = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAssociats();
+                            //Recorremos el array/tabla mostrando los datos de cada uno
+                            for (InvestigadorAssociat investigadorsAssociat : tmpInvestigadorsAssociats) {
+                                if (investigadorsAssociat != null) {
+                                    investigadorsAssociat.showInvestigadorAssociat();
+                                }
                             }
+                        } else {
+                            System.out.println("\nEl departament seleccionat no eixisteix");
                         }
                     } else {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
@@ -393,7 +405,7 @@ public class Application {
             System.out.println("\n0. Sortir");
             System.out.println("\n1. Alta");
             System.out.println("\n2. Modificar");
-            System.out.println("\n3. Llista Investigadors Principals");
+            System.out.println("\n3. Llista Investigadors Auxiliars");
             opcio = UtilsES.demanarEnter("", MISSATGE_ERROR_DADES);
             switch (opcio) {
                 case 0:
@@ -409,32 +421,40 @@ public class Application {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
                     break;
-                case 2:                    
+                case 2: //MODIFICAR
                     if (centreRecercaActual != null) {
                         //Solicitamos departamento
                         int tmpIndexDepartament = centreRecercaActual.selectDepartament(null);
-                        //Del departamento solicitado nos traemos al array de investigadores Auxiliar y solicitamos al usuario el codigo del que quiere actualizar
-                        Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
-                        InvestigadorAuxiliar[] tmpInvestigadorsAuxiliars = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAuxiliars();
-                        int tmpIndexInvestigadorAuxiliar = tmpDepartaments[tmpIndexDepartament].selectInvestigadorAssociat(null);
-                        //Actualizamos al seleccionado
-                        tmpInvestigadorsAuxiliars[tmpIndexInvestigadorAuxiliar].updateInvestigadorAuxiliar();
+                        if (tmpIndexDepartament >= 0) {
+                            //Del departamento solicitado nos traemos al array de investigadores Auxiliar y solicitamos al usuario el codigo del que quiere actualizar
+                            Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
+                            InvestigadorAuxiliar[] tmpInvestigadorsAuxiliars = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAuxiliars();
+                            int tmpIndexInvestigadorAuxiliar = tmpDepartaments[tmpIndexDepartament].selectInvestigadorAssociat(null);
+                            //Actualizamos al seleccionado
+                            tmpInvestigadorsAuxiliars[tmpIndexInvestigadorAuxiliar].updateInvestigadorAuxiliar();
+                        } else {
+                            System.out.println("\nEl departament seleccionat no eixisteix");
+                        }
                     } else {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");
                     }
                     break;
-                case 3:
+                case 3: //LLISTAR
                     if (centreRecercaActual != null) {
                         //Solicitamos departamento
                         int tmpIndexDepartament = centreRecercaActual.selectDepartament(null);
-                        //Del departamento solicitado nos traemos al array de investigadores Auxiliar
-                        Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
-                        InvestigadorAuxiliar[] tmpInvestigadorsAuxiliars = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAuxiliars();
-                        //Recorremos el array/tabla mostrando los datos de cada uno
-                        for (InvestigadorAuxiliar investigadorsAuxiliar : tmpInvestigadorsAuxiliars) {
-                            if (investigadorsAuxiliar != null) {
-                                investigadorsAuxiliar.showInvestigadorAuxiliar();
+                        if (tmpIndexDepartament >= 0) {
+                            //Del departamento solicitado nos traemos al array de investigadores Auxiliar
+                            Departament[] tmpDepartaments = centreRecercaActual.getDepartaments();
+                            InvestigadorAuxiliar[] tmpInvestigadorsAuxiliars = tmpDepartaments[tmpIndexDepartament].getInvestigadorsAuxiliars();
+                            //Recorremos el array/tabla mostrando los datos de cada uno
+                            for (InvestigadorAuxiliar investigadorsAuxiliar : tmpInvestigadorsAuxiliars) {
+                                if (investigadorsAuxiliar != null) {
+                                    investigadorsAuxiliar.showInvestigadorAuxiliar();
+                                }
                             }
+                        } else {
+                            System.out.println("\nEl departament seleccionat no eixisteix");
                         }
                     } else {
                         System.out.println("\nPrimer s'ha de seleccionar el Centre Recerca al menú Gestió Centres Recerca");

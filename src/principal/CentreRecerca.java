@@ -131,9 +131,9 @@ public class CentreRecerca {
     public double calcularTotalDespesa() {
 
         double despesaDepartament = 0;
-        for (int i = 0; i < this.getDepartaments().length; i++) {
-            if(departaments[i] != null){ 
-                despesaDepartament += departaments[i].calcularTotalDespesa();
+        for (Departament departament : this.departaments) {
+            if (departament != null) {
+                despesaDepartament += departament.calcularTotalDespesa();
             }           
         }
 

@@ -12,7 +12,7 @@ import biblioteca.UtilsES;
  * @author itc
  */
 public class InvestigadorAssociat {
-    
+
     static final String MISSATGE_ERROR_DADES = "La selecció no és valida. Torneu-ho a intentar";
     static final String MISSATGE_DEMANAR_CODI = "Introdueix el codi del nou investigador asociat";
     static final String MISSATGE_DEMANAR_NOM = "Introdueix el nom del nou investigador asociat";
@@ -98,13 +98,13 @@ public class InvestigadorAssociat {
         int _experiencia = UtilsES.demanarEnter(MISSATGE_DEMANAR_EXPERIENCIA, MISSATGE_ERROR_DADES);
         double _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);
 
-        if ((_sou <= 20000) || (_sou >= 30000)) {
-            System.out.println("\nAmb aquest salari no pot ser Investigador Associat. Operació cancel·lada!");
-            return null;
-        } else {
-            //Creamos un objeto de la clase y pasamos parametros al constructor
-            return new InvestigadorAssociat(_codi, _nom, _experiencia, _sou);
+        //Hacemos la comprobación de rango de salario
+        while ((_sou <= 20000) || (_sou >= 30000)) {
+            System.out.println("\nAmb aquest salari no pot ser Investigador Associat.");
+            _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);
         }
+        //Devolvemos el objeto creado
+        return new InvestigadorAssociat(_codi, _nom, _experiencia, _sou);
     }
 
     /*
@@ -128,15 +128,18 @@ public class InvestigadorAssociat {
         int _experiencia = UtilsES.demanarEnter(MISSATGE_DEMANAR_EXPERIENCIA, MISSATGE_ERROR_DADES);
         double _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);
 
-        if ((_sou <= 20000) || (_sou >= 30000)) {
-            System.out.println("\nAmb aquest salari no pot ser Investigador Associat. Operació cancel·lada!");
-        } else {
-            //actualizamos el objeto de la clase y pasamos parametros al constructor            
-            this.setCodi(_codi);
-            this.setNom(_nom);
-            this.setExperiencia(_experiencia);
-            this.setSou(_sou);
+        //Hacemos la comprobación de rango de salario
+        while ((_sou <= 20000) || (_sou >= 30000)) {
+            System.out.println("\nAmb aquest salari no pot ser Investigador Associat.");
+            _sou = UtilsES.demanarDouble(MISSATGE_DEMANAR_SOU, MISSATGE_ERROR_DADES);
         }
+
+        //Actualizamos el objeto de la clase
+        this.setCodi(_codi);
+        this.setNom(_nom);
+        this.setExperiencia(_experiencia);
+        this.setSou(_sou);
+        
     }
 
     public void showInvestigadorAssociat() {
